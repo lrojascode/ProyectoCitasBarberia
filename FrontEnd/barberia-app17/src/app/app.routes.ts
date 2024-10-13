@@ -7,6 +7,10 @@ export const routes: Routes = [
       import('./dashboard/dashboard.routes').then((c) => c.DASHBOARD_ROUTES),
   },
   {
+    path: '',
+    loadChildren: () => import('./site/site.routes').then((r) => r.SITE_ROUTES),
+  },
+  {
     path: '**',
     redirectTo: 'dashboard',
   },

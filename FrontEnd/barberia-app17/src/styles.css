@@ -1,3 +1,18 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "primeng/resources/themes/lara-dark-amber/theme.css";
+@import "primeng/resources/primeng.css";
+
+@layer tailwind-base, primeng, tailwind-utilities;
+
+@layer tailwind-base {
+  @tailwind base;
+
+  body {
+    @apply text-gray-400 bg-black text-sm;
+  }
+}
+
+@layer tailwind-utilities {
+  @tailwind components;
+  @tailwind utilities;
+}
+
