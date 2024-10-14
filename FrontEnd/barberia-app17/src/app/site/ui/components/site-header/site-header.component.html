@@ -1,23 +1,55 @@
 <header class="h-16 flex justify-between items-center p-6">
-  <div class="w-28">
-    <img src="/assets/barber.png" alt="Logo">
+  <div class="w-28 relative">
+    <a routerLink="/home" class="block">
+      <img src="/assets/barber.png" alt="Logo">
+    </a>
   </div>
   <nav>
     <ul class="flex gap-4 items-center font-serif">
       <li class="hover:text-gold-500 transition-colors">
-        <a href="#" class="inline-block py-1.5 px-2.5">Servicios</a>
+        <a
+          href="#"
+          class="inline-block py-1.5 px-2.5"
+          routerLinkActive="active-route"
+        >
+          Servicios
+        </a>
       </li>
       <li class="hover:text-gold-500 transition-colors">
-        <a href="#" class="inline-block py-1.5 px-2.5">Profesionales</a>
+        <a
+          href="#"
+          class="inline-block py-1.5 px-2.5"
+          routerLink="/profesionals"
+          routerLinkActive="active-route"
+        >
+          Profesionales
+        </a>
       </li>
       <li class="hover:text-gold-500 transition-colors">
-        <a href="#" class="inline-block py-1.5 px-2.5">Calendario</a>
+        <a
+          href="#"
+          class="inline-block py-1.5 px-2.5"
+          routerLinkActive="active-route"
+        >
+          Calendario
+        </a>
       </li>
       <li class="hover:text-gold-500 transition-colors">
-        <a href="#" class="inline-block py-1.5 px-2.5">Turnos</a>
+        <a href="#"
+           class="inline-block py-1.5 px-2.5"
+           routerLinkActive="active-route"
+        >
+          Turnos
+        </a>
       </li>
       <li class="hover:text-gold-500 transition-colors">
-        <a href="#" class="inline-block py-1.5 px-2.5">Perfil</a>
+        <a
+          href="#"
+          class="inline-block py-1.5 px-2.5"
+          routerLinkActive="active-route"
+        >
+          Perfil
+        </a>
       </li>
     </ul>
   </nav>

@@ -16,3 +16,6 @@
   @tailwind utilities;
 }
 
+.active-route {
+  @apply text-gold-500
+}
