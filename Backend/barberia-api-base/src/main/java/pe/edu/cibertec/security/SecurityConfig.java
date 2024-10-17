@@ -59,14 +59,13 @@ public class SecurityConfig {
 				.userDetailsService(userDetailsService)
 				.passwordEncoder(passwordEncoder())
 				.and()
-				.build();
-			
+				.build();		
 	}
 	
 	/*
 	public static void main(String[] args) {
-		System.out.println("Pasword: "+ new BCryptPasswordEncoder().encode("pedro"));
-	}
-	*/
+		System.out.println("Pasword: "+ new BCryptPasswordEncoder().encode("adminPass"));
+	}*/
+	
 	
 }

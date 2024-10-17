@@ -36,16 +36,16 @@ CREATE TABLE services (
     duration_minutes INT NOT NULL
 );
 
--- Tabla employees
 CREATE TABLE employees (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
     profession VARCHAR(70) NOT NULL,
-    picture MEDIUMBLOB,
+    picture VARCHAR(255),  -- Cambiado a VARCHAR para almacenar la URL
     working_days VARCHAR(7) NOT NULL,
     active TINYINT(1) DEFAULT 1
 );
+
 
 -- Relación empleados - servicios (employees_services)
 CREATE TABLE employees_services (
@@ -96,18 +96,18 @@ INSERT INTO roles (name) VALUES
 
 -- Insertar usuarios
 INSERT INTO users (username, password, email, role_id) VALUES
-('adminUser', 'adminPass', 'admin@barbershop.com', 1),
+('adminUser', '$10$WAuPuixhDu.Q5qNYIFDTWuEAbZbtbuQXutH0Vo/Y5OQHGhnh.RRmK', 'admin@barbershop.com', 1),
 ('employee1', 'emp1Pass', 'employee1@barbershop.com', 2),
 ('employee2', 'emp2Pass', 'employee2@barbershop.com', 2),
-('customer1', 'cust1Pass', 'customer1@example.com', 3),
-('customer2', 'cust2Pass', 'customer2@example.com', 3),
-('customer3', 'cust3Pass', 'customer3@example.com', 3);
+('customer1', 'cust1Pass', 'customer1@example.com', 2),
+('customer2', 'cust2Pass', 'customer2@example.com', 2),
+('customer3', 'cust3Pass', 'customer3@example.com', 2);
 
 -- Insertar clientes (relacionados con los usuarios)
 INSERT INTO customers (users_id, first_name, last_name, phone) VALUES
-(4, 'Juan', 'Pérez', '555-1234'),
-(5, 'María', 'García', '555-5678'),
-(6, 'Carlos', 'López', '555-9012');
+(1, 'Juan', 'Pérez', '555-1234'),
+(2, 'María', 'García', '555-5678'),
+(3, 'Carlos', 'López', '555-9012');
 
 -- Insertar servicios
 INSERT INTO services (name, description, price, duration_minutes) VALUES
@@ -116,10 +116,10 @@ INSERT INTO services (name, description, price, duration_minutes) VALUES
 ('Afeitado Clásico', 'Afeitado con navaja tradicional', 12.00, 25),
 ('Corte y Barba', 'Combo de corte de cabello y arreglo de barba', 22.00, 45);
 
--- Insertar empleados
-INSERT INTO employees (first_name, last_name, profession, working_days, active) VALUES
-('Miguel', 'Rodríguez', 'Barbero', 'Mon-Fri', 1),
-('Sofía', 'Martínez', 'Barbera', 'Tue-Sat', 1);
+INSERT INTO employees (first_name, last_name, profession, picture, working_days, active) VALUES
+('Miguel', 'Rodríguez', 'Barbero', 'http://example.com/image1.jpg', 'Mon-Fri', 1),
+('Sofía', 'Martínez', 'Barbera', 'http://example.com/image2.jpg', 'Tue-Sat', 1);
+
 
 -- Relacionar empleados con servicios (employees_services)
 INSERT INTO employees_services (employees_id, services_id) VALUES
@@ -145,4 +145,3 @@ INSERT INTO appointments (customers_id, employees_id, services_id, datetime, end
 (1, 1, 1, '2024-10-10 10:00:00', '10:30:00', 0),  -- Juan con Miguel para Corte de Cabello
 (2, 2, 3, '2024-10-11 11:00:00', '11:25:00', 0),  -- María con Sofía para Afeitado Clásico
 (3, 1, 4, '2024-10-12 14:00:00', '14:45:00', 0); -- Carlos con Miguel para Corte y Barba
-

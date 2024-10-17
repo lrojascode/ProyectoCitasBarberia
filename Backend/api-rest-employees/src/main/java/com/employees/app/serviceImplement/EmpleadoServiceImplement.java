@@ -123,11 +123,6 @@ public class EmpleadoServiceImplement implements EmpleadoService {
 	public ResponseEntity<Map<String, Object>> agregarEmpleados(Empleado empleado) {
 	    Map<String, Object> respuesta = new HashMap<>();
 
-	    if (empleado.getPictureBase64() != null && empleado.getPictureBase64().startsWith("data:image/")) {
-	        String base64Image = empleado.getPictureBase64().split(",")[1];
-	        empleado.setPicture(Base64.getDecoder().decode(base64Image));
-	    }
-
 	    if (empleado.getId() != null && dao.existsById(empleado.getId())) {
 	        respuesta.put("mensaje", "Error: Ya existe un empleado con el ID proporcionado.");
 	        respuesta.put("status", HttpStatus.BAD_REQUEST);

@@ -5,7 +5,6 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.Table;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -24,9 +23,7 @@ public class Empleado {
 	private String first_name;
 	private String last_name;
 	private String profession;
-	private String pictureBase64;
-	@Lob
-	private byte[] picture;
+	private String picture;
 	private String working_days;
 	private Boolean active;
 
