@@ -1,9 +1,12 @@
 package pe.edu.cibertec.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -21,5 +24,8 @@ public class Servicio {
 	public String description;
 	public double price;
 	public int duration_minutes;
+
+	@ManyToMany(mappedBy = "services")
+    private List<Empleado> employees;
 	
 }
