@@ -1,7 +1,6 @@
 package pe.edu.cibertec.serviceImplement;
 
 import java.util.Collection;
-import java.util.Collections;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,9 +14,9 @@ public class UserDetailImplement implements UserDetails{
 	private final Usuario usuario;
 
 	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return Collections.emptyList();
-	}
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return usuario.getAuthorities(); // Usa las autoridades del usuario
+    }
 
 	@Override
 	public String getPassword() {

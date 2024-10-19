@@ -2,6 +2,8 @@ package pe.edu.cibertec.security;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -34,8 +36,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		
 		UsernamePasswordAuthenticationToken userPAT = new UsernamePasswordAuthenticationToken(
 				authCredenciales.getUsername(),
-				authCredenciales.getPassword(),
-				Collections.emptyList()
+				authCredenciales.getPassword()
 				);
 		
 		return getAuthenticationManager().authenticate(userPAT);
@@ -50,6 +51,20 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		
 		response.addHeader("Authorization", "Bearer "+ token);
 		response.getWriter().flush();
+
+		// Configurar la respuesta como JSON
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        
+        // Crear un objeto para la respuesta
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("username", userDetails.getUsername());
+        responseBody.put("email", userDetails.getEmail());
+        responseBody.put("authorities", userDetails.getAuthorities());
+        
+        // Convertir el Map a JSON y escribirlo en la respuesta
+        ObjectMapper mapper = new ObjectMapper();
+        response.getWriter().write(mapper.writeValueAsString(responseBody));
 		
 		super.successfulAuthentication(request, response, chain, authResult);
 	}
