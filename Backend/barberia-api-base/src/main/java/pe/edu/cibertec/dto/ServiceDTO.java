@@ -1,5 +1,7 @@
 package pe.edu.cibertec.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,10 +11,11 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SimpleServiceDTO {
+public class ServiceDTO {
     private Long id;
     private String name;
     private String description;
     private Double price;
-    private Integer duration_minutes;
+    private Integer durationMinutes;
+    private List<SimpleEmployeeDTO> employees;
 }

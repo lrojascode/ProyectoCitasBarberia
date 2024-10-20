@@ -22,10 +22,11 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class SecurityConfig {
 
+	@Autowired
 	private final UserDetailsService userDetailsService;
 
 	private final JWTAuthorizationFilter jwtAuthorizationFilter;
-	
+
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authManager) throws Exception {
 		

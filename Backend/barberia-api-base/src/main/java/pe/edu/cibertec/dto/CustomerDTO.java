@@ -9,10 +9,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SimpleServiceDTO {
+public class CustomerDTO {
     private Long id;
-    private String name;
-    private String description;
-    private Double price;
-    private Integer duration_minutes;
+    private UsuarioDTO user;
+    private String firstName;
+    private String lastName;
+    private String phone;
 }
