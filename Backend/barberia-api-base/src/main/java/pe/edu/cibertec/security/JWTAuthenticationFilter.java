@@ -22,13 +22,13 @@ import pe.edu.cibertec.serviceImplement.UserDetailImplement;
 import pe.edu.cibertec.util.Token;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter{
-	
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException {
 
 		Auth authCredenciales = new Auth();
-		
+
+		System.out.println("Attempting Auth");
 		try {
 			authCredenciales = new ObjectMapper().readValue(request.getReader(), Auth.class);
 		} catch (Exception e) {
@@ -38,7 +38,10 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 				authCredenciales.getUsername(),
 				authCredenciales.getPassword()
 				);
-		
+
+		System.out.println("USER PAT");
+		System.out.println(userPAT);
+
 		return getAuthenticationManager().authenticate(userPAT);
 	}
 	
@@ -61,6 +64,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         responseBody.put("username", userDetails.getUsername());
         responseBody.put("email", userDetails.getEmail());
         responseBody.put("authorities", userDetails.getAuthorities());
+		responseBody.put("token", token);
         
         // Convertir el Map a JSON y escribirlo en la respuesta
         ObjectMapper mapper = new ObjectMapper();
