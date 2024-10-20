@@ -30,7 +30,7 @@ import java.util.List;
 @Entity
 @Table(name = "employees")
 @EntityListeners(AuditingEntityListener.class)
-public class Empleado {
+public class Empleado implements Workable{
 @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -59,5 +59,9 @@ public class Empleado {
         this.services = services;
         this.workingDays = workingDays;
         this.active = true;
+    }
+	@Override
+    public String getWorkingDays() {
+        return this.workingDays;
     }
 }

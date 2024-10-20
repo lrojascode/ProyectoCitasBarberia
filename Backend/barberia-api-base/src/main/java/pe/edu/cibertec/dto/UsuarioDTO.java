@@ -1,5 +1,7 @@
 package pe.edu.cibertec.dto;
 
+import javax.management.relation.Role;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,10 +11,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SimpleServiceDTO {
+public class UsuarioDTO {
     private Long id;
-    private String name;
-    private String description;
-    private Double price;
-    private Integer duration_minutes;
+    private String username;
+    private String email;
+    private Role role;
 }
