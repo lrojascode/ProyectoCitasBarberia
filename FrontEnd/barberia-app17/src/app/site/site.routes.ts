@@ -3,6 +3,9 @@ import { SiteLayoutComponent } from './ui/layouts/site-layout/site-layout.compon
 import { HomeComponent } from './pages/home/home.component';
 import { ProfesionalsComponent } from './pages/profesionals/profesionals.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
+import { ProfesionalDetailComponent } from './ui/components/profesional-detail/profesional-detail.component';
+import { ServicesByProfesionalComponent } from './ui/components/services-by-profesional/services-by-profesional.component';
+
 
 export const SITE_ROUTES: Routes = [
   {
@@ -19,7 +22,15 @@ export const SITE_ROUTES: Routes = [
       },
       {
         path: 'perfil',
-        component: PerfilComponent
+        component: PerfilComponent,
+      },
+      {
+        path: 'profesionals/:id',
+        component: ProfesionalDetailComponent,
+      },
+      {
+        path: 'profesionals/:id/services',
+        component: ServicesByProfesionalComponent,
       },
       {
         path: '**',
