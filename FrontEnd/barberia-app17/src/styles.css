@@ -10,6 +10,10 @@
   body {
     @apply text-gray-400 bg-black;
   }
+
+  * {
+    @apply border-[--surface-border]
+  }
 }
 
 @layer tailwind-utilities {

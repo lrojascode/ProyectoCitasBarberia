@@ -2,7 +2,6 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { AuthCredentials } from '../models/auth-credentials';
-import { firstValueFrom, tap } from 'rxjs';
 import { LoginResponse } from '../models/login-response.interface';
 
 @Injectable({
@@ -10,14 +9,10 @@ import { LoginResponse } from '../models/login-response.interface';
 })
 export class AuthService {
   private readonly _http = inject(HttpClient);
-  private readonly _urlBase = environment.urlBase;
+  private readonly _urlBase = environment.url;
 
-  public login(credentials: AuthCredentials): Promise<LoginResponse> {
+  public login(credentials: AuthCredentials) {
     const url = `${this._urlBase}/login`;
-    const response$ = this._http
-      .post<LoginResponse>(url, credentials)
-      .pipe(tap((response) => console.log('Login Response', response)));
-
-    return firstValueFrom(response$);
+    return this._http.post<LoginResponse>(url, credentials);
   }
 }

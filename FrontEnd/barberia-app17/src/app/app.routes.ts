@@ -3,7 +3,7 @@ import { LoginPageComponent } from './auth/pages/login-page/login-page.component
 
 export const routes: Routes = [
   {
-    path: 'auth',
+    path: 'auth/login',
     component: LoginPageComponent,
   },
   {
@@ -17,6 +17,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'dashboard',
+    redirectTo: 'home',
   },
 ];

@@ -24,6 +24,7 @@
     "@angular/router": "^18.2.8",
     "@angular/ssr": "^18.2.9",
     "@eslint/js": "^9.13.0",
+    "@ngrx/operators": "^18.1.0",
     "@ngrx/signals": "^18.1.0",
     "angular-eslint": "^18.3.1",
     "barberia-app17": "file:",

@@ -7,7 +7,7 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { NgClass } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
-import { FormValidatorsService } from '../../../shared/utils/form-validator.service';
+import { FormValidatorsService } from '../../../shared/services/form-validator.service';
 import { AuthCredentials } from '../../models/auth-credentials';
 
 @Component({
