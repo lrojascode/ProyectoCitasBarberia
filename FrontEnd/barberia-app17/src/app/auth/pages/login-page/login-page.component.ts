@@ -3,6 +3,7 @@ import { LoginFormComponent } from '../../ui/login-form/login-form.component';
 import { AuthStore } from '../../store/auth.store';
 import { AuthCredentials } from '../../models/auth-credentials';
 import { ToastService } from '../../../shared/services/toast.service';
+import { AuthFacade } from '../../services/auth-facade.service';
 
 @Component({
   selector: 'app-login-page',
@@ -12,10 +13,10 @@ import { ToastService } from '../../../shared/services/toast.service';
 })
 export class LoginPageComponent {
   private readonly toastService = inject(ToastService);
-  private readonly authStore = inject(AuthStore);
+  private readonly authFacade = inject(AuthFacade);
 
-  public isLoading = this.authStore.loading;
-  public error = this.authStore.error;
+  public isLoading = this.authFacade.loading;
+  public error = this.authFacade.error;
 
   constructor() {
     effect(() => {
@@ -31,6 +32,6 @@ export class LoginPageComponent {
   }
 
   public login({ username, password }: AuthCredentials) {
-    this.authStore.login({ username, password });
+    this.authFacade.login({ username, password });
   }
 }

@@ -14,15 +14,21 @@ import { Router } from '@angular/router';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { pipe, switchMap, tap } from 'rxjs';
 import { tapResponse } from '@ngrx/operators';
-import { ToastService } from '../../shared/services/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Authority } from '../models/authority.interface';
 
 interface AuthState {
-  userSession: UserSession | undefined;
+  username: string | undefined;
+  email: string | undefined;
+  token: string | undefined;
+  authorities: Authority[];
 }
 
 const initialAuthState: AuthState = {
-  userSession: undefined,
+  username: undefined,
+  email: undefined,
+  authorities: [],
+  token: undefined,
 };
 
 export const AuthStore = signalStore(
@@ -31,15 +37,10 @@ export const AuthStore = signalStore(
   withCallState(),
   withStorageSync({
     key: 'auth',
-    select: (state) => ({ userSession: state.userSession }),
+    select: (state) => ({ token: state.token }),
   }),
   withMethods(
-    (
-      state,
-      authService = inject(AuthService),
-      router = inject(Router),
-      toastService = inject(ToastService),
-    ) => ({
+    (state, authService = inject(AuthService), router = inject(Router)) => ({
       login: rxMethod<AuthCredentials>(
         pipe(
           tap(() => patchState(state, setLoading())),
@@ -47,7 +48,7 @@ export const AuthStore = signalStore(
             authService.login(credentials).pipe(
               tapResponse({
                 next: (userSession) => {
-                  patchState(state, { userSession });
+                  patchState(state, { ...userSession });
                   router.navigateByUrl('/');
                 },
                 error: (err) => {
