@@ -5,6 +5,7 @@ import { ProfesionalsComponent } from './pages/profesionals/profesionals.compone
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import { ProfesionalDetailComponent } from './ui/components/profesional-detail/profesional-detail.component';
 import { ServicesByProfesionalComponent } from './ui/components/services-by-profesional/services-by-profesional.component';
+import { isAuthenticatedGuard } from '../auth/guards/is-authenticated.guard';
 
 export const SITE_ROUTES: Routes = [
   {
@@ -22,14 +23,17 @@ export const SITE_ROUTES: Routes = [
       {
         path: 'perfil',
         component: PerfilComponent,
+        canActivate: [isAuthenticatedGuard],
       },
       {
         path: 'profesionals/:id',
         component: ProfesionalDetailComponent,
+        canActivate: [isAuthenticatedGuard],
       },
       {
         path: 'profesionals/:id/services',
         component: ServicesByProfesionalComponent,
+        canActivate: [isAuthenticatedGuard],
       },
       {
         path: '**',

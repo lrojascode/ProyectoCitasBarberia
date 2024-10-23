@@ -4,11 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class JwtService {
-  public isTokenExpired(token: string | undefined) {
-    if (!token) {
-      return true;
-    }
-
+  public isTokenExpired(token: string) {
     try {
       const timeToExpiration = this.getTimeToExpiration(token);
       return timeToExpiration <= 0;

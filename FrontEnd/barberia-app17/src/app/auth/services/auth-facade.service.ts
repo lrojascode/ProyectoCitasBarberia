@@ -1,4 +1,4 @@
-import { inject, Injectable, Signal } from '@angular/core';
+import { computed, inject, Injectable, Signal } from '@angular/core';
 import { AuthStore } from '../store/auth.store';
 import { AuthCredentials } from '../models/auth-credentials';
 
@@ -7,6 +7,10 @@ import { AuthCredentials } from '../models/auth-credentials';
 })
 export class AuthFacade {
   private readonly authStore = inject(AuthStore);
+
+  get isLoggedIn(): Signal<boolean> {
+    return computed(() => Boolean(this.authStore.token()));
+  }
 
   get loading(): Signal<boolean> {
     return this.authStore.loading;
@@ -26,5 +30,9 @@ export class AuthFacade {
 
   public login(credentials: AuthCredentials) {
     this.authStore.login(credentials);
+  }
+
+  public async logout() {
+    await this.authStore.logout();
   }
 }

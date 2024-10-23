@@ -15,7 +15,6 @@ export const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./site/site.routes').then((r) => r.SITE_ROUTES),
-    canActivate: [isAuthenticatedGuard],
   },
   {
     path: '**',

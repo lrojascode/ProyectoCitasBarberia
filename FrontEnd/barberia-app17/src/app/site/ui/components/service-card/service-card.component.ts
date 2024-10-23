@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
-import { Service } from '../../../models/service.interface';
+import { Service } from '../../../../features/barber-services/models/service.interface';
 
 @Component({
   selector: 'service-card',

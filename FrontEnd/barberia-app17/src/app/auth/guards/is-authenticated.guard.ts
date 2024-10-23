@@ -10,7 +10,7 @@ export const isAuthenticatedGuard: CanActivateFn = (route, state) => {
 
   const token = authFacade.token();
 
-  if (jwtService.isTokenExpired(token)) {
+  if (!token || jwtService.isTokenExpired(token)) {
     return router.createUrlTree(['/auth/login'], {
       queryParams: {
         returnUrl: state.url,

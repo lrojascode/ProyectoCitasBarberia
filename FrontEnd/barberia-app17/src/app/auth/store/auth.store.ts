@@ -81,6 +81,10 @@ export const AuthStore = signalStore(
           ),
         ),
       ),
+      logout: async () => {
+        patchState(state, initialAuthState);
+        await router.navigateByUrl('/auth/login');
+      },
     }),
   ),
 );
