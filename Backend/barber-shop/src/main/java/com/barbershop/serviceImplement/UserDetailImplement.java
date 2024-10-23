@@ -64,5 +64,9 @@ public class UserDetailImplement implements UserDetails {
     public String getUser() {
         return usuario.getUsername();
     }
+
+    public String getEmail() {
+        return usuario.getEmail();
+    }
 }
 

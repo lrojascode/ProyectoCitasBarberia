@@ -2,6 +2,8 @@ package com.barbershop.security;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -30,7 +32,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			authCredenciales = new ObjectMapper().readValue(request.getReader(), Auth.class);
 		} catch (Exception e) {
 		}
-		
+
+		System.out.println(authCredenciales);
 		UsernamePasswordAuthenticationToken userPAT = new UsernamePasswordAuthenticationToken(
 				authCredenciales.getEmail(),
 				authCredenciales.getPassword(),
@@ -48,8 +51,22 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	    String token = Token.crearToken(userDetails.getUser(), userDetails.getUsername(), userDetails.getUsuario().getRole().getName());
 
 	    response.addHeader("Authorization", "Bearer " + token);
-
 	    response.getWriter().flush();
+		// Configurar la respuesta como JSON
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+
+		// Crear un objeto para la respuesta
+		Map<String, Object> responseBody = new HashMap<>();
+		responseBody.put("username", userDetails.getUsername());
+		responseBody.put("authorities", userDetails.getAuthorities());
+		responseBody.put("token", token);
+
+		// Convertir el Map a JSON y escribirlo en la respuesta
+		ObjectMapper mapper = new ObjectMapper();
+		response.getWriter().write(mapper.writeValueAsString(responseBody));
+
+		super.successfulAuthentication(request, response, chain, authResult);
 	}
 
 	

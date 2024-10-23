@@ -81,10 +81,8 @@ public class SecurityConfig {
 	}
 	*/
 	
-	/*METODO PARA ENCRYPTAR Y VER LA PASSWORD
-	public static void main(String[] args) {
-		System.out.println("Pasword: "+ new BCryptPasswordEncoder().encode("pedro"));
-	}
-	*/
-	
+//	METODO PARA ENCRYPTAR Y VER LA PASSWORD
+//	public static void main(String[] args) {
+//		System.out.println("Pasword: "+ new BCryptPasswordEncoder().encode("adminPass"));
+//	}
 }
