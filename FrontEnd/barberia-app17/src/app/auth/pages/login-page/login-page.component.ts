@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { LoginFormComponent } from '../../ui/login-form/login-form.component';
 import { AuthCredentials } from '../../models/auth-credentials';
 import { ToastService } from '../../../shared/services/toast.service';
