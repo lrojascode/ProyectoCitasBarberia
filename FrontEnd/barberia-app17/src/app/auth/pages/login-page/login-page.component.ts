@@ -1,6 +1,5 @@
 import { Component, effect, inject } from '@angular/core';
 import { LoginFormComponent } from '../../ui/login-form/login-form.component';
-import { AuthStore } from '../../store/auth.store';
 import { AuthCredentials } from '../../models/auth-credentials';
 import { ToastService } from '../../../shared/services/toast.service';
 import { AuthFacade } from '../../services/auth-facade.service';
@@ -18,20 +17,7 @@ export class LoginPageComponent {
   public isLoading = this.authFacade.loading;
   public error = this.authFacade.error;
 
-  constructor() {
-    effect(() => {
-      const error = this.error();
-      if (error && error.trim() !== '') {
-        this.toastService.showToast({
-          severity: 'error',
-          summary: 'Error',
-          detail: this.error() ?? undefined,
-        });
-      }
-    });
-  }
-
-  public login({ username, password }: AuthCredentials) {
-    this.authFacade.login({ username, password });
+  public login({ email, password }: AuthCredentials) {
+    this.authFacade.login({ email, password });
   }
 }

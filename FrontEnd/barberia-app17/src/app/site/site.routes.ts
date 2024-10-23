@@ -6,7 +6,6 @@ import { PerfilComponent } from './pages/perfil/perfil.component';
 import { ProfesionalDetailComponent } from './ui/components/profesional-detail/profesional-detail.component';
 import { ServicesByProfesionalComponent } from './ui/components/services-by-profesional/services-by-profesional.component';
 
-
 export const SITE_ROUTES: Routes = [
   {
     path: '',

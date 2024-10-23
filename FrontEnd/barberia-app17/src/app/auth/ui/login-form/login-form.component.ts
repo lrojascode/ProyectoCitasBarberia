@@ -40,7 +40,6 @@ export class LoginFormComponent {
   public readonly loginForm = this.formBuilder.group({
     username: ['', Validators.required],
     password: ['', Validators.required],
-    rememberMe: [false],
   });
 
   public showPassword(): void {
@@ -59,7 +58,7 @@ export class LoginFormComponent {
     }
 
     this.submittedForm.emit({
-      username: this.loginForm.value.username,
+      email: this.loginForm.value.username,
       password: this.loginForm.value.password,
     } as AuthCredentials);
   }

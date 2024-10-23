@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { LoginPageComponent } from './auth/pages/login-page/login-page.component';
+import { isAuthenticatedGuard } from './auth/guards/is-authenticated.guard';
 
 export const routes: Routes = [
   {
@@ -14,6 +15,7 @@ export const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./site/site.routes').then((r) => r.SITE_ROUTES),
+    canActivate: [isAuthenticatedGuard],
   },
   {
     path: '**',

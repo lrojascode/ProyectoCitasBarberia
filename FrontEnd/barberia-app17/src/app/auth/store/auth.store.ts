@@ -10,12 +10,13 @@ import {
 import { inject } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { AuthCredentials } from '../models/auth-credentials';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { pipe, switchMap, tap } from 'rxjs';
+import { delay, pipe, switchMap, tap } from 'rxjs';
 import { tapResponse } from '@ngrx/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Authority } from '../models/authority.interface';
+import { ToastService } from '../../shared/services/toast.service';
 
 interface AuthState {
   username: string | undefined;
@@ -40,27 +41,41 @@ export const AuthStore = signalStore(
     select: (state) => ({ token: state.token }),
   }),
   withMethods(
-    (state, authService = inject(AuthService), router = inject(Router)) => ({
+    (
+      state,
+      authService = inject(AuthService),
+      router = inject(Router),
+      activatedRoute = inject(ActivatedRoute),
+      toastService = inject(ToastService),
+    ) => ({
       login: rxMethod<AuthCredentials>(
         pipe(
           tap(() => patchState(state, setLoading())),
           switchMap((credentials) =>
             authService.login(credentials).pipe(
               tapResponse({
-                next: (userSession) => {
+                next: async (userSession) => {
                   patchState(state, { ...userSession });
-                  router.navigateByUrl('/');
+                  const returnUrl =
+                    activatedRoute.snapshot.queryParams['returnUrl'] || '/';
+                  await router.navigateByUrl(returnUrl);
                 },
                 error: (err) => {
                   if (err instanceof HttpErrorResponse && err.status === 401) {
                     patchState(
                       state,
-                      setLoaded(),
                       setError('Credenciales de acceso incorrectas'),
                     );
+                  } else {
+                    patchState(state, setError((err as any).message));
                   }
-                  console.log(err);
+                  toastService.showToast({
+                    severity: 'error',
+                    summary: 'Error',
+                    detail: state.error() ?? 'Algo salió mal',
+                  });
                 },
+                finalize: () => patchState(state, setLoaded()),
               }),
             ),
           ),
