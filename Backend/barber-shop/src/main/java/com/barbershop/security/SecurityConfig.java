@@ -35,6 +35,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .antMatchers("/api/usuario/register").permitAll() // Permite el acceso público al registro
                 .antMatchers("/api/password/**").permitAll() // Permite el acceso público a restablecer contraseña
+                .antMatchers("/api/servicios").permitAll() // Permite el acceso público a lista de servicios
+                .antMatchers("/api/employees/enable").permitAll() // Permite el acceso público a lista de empleados activos
                 .antMatchers("/admin/**").hasAuthority("Admin") // Solo accesible para admin
                 .antMatchers("/customer/**").hasAuthority("Customer") // Solo accesible para clientes
                 .antMatchers("/api/employees/{employeeId}/services").hasAuthority("Customer")  // Solo accesible para Customer
