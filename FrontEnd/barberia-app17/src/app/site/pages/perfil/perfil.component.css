@@ -61,4 +61,13 @@
   .input-editable:disabled {
     background-color: #f7fafc;
   }
+
+  .input-editable {
+    @apply border rounded-lg p-2 w-full bg-gray-800 text-white;
+  }
+  
+  .input-editable:read-only {
+    @apply bg-gray-700 cursor-not-allowed;
+  }
+  
   
