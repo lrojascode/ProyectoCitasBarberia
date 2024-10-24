@@ -6,6 +6,7 @@ import { PerfilComponent } from './pages/perfil/perfil.component';
 import { ProfesionalDetailComponent } from './ui/components/profesional-detail/profesional-detail.component';
 import { ServicesByProfesionalComponent } from './pages/services-by-profesional/services-by-profesional.component';
 import { isAuthenticatedGuard } from '../auth/guards/is-authenticated.guard';
+import { BookAppointmentComponent } from './pages/book-appointment/book-appointment.component';
 
 export const SITE_ROUTES: Routes = [
   {
@@ -33,6 +34,11 @@ export const SITE_ROUTES: Routes = [
       {
         path: 'profesionals/:id/services',
         component: ServicesByProfesionalComponent,
+        canActivate: [isAuthenticatedGuard],
+      },
+      {
+        path: 'book-appointment/:serviceId/:profesionalId',
+        component: BookAppointmentComponent,
         canActivate: [isAuthenticatedGuard],
       },
       {

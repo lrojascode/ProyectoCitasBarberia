@@ -1,0 +1,32 @@
+<div
+  class="h-[calc(100svh-132px)] grid grid-rows-[auto_1fr_auto] gap-4 justify-center"
+>
+  <section>
+    <h2 class="text-xl font-semibold">Servicio seleccionado</h2>
+  </section>
+  <div class="w-[32rem]">
+    <p-calendar
+      [inline]="true"
+      styleClass="w-full"
+      [minDate]="minDate"
+      [(ngModel)]="selectedDate"
+    />
+  </div>
+  <section>
+    <h2 class="text-xl font-semibold">
+      Horarios disponibles para el
+      {{ format(selectedDate(), "d 'de' MMMM", { locale: es }) }}
+    </h2>
+    <div
+      class="grid grid-cols-[repeat(auto-fill,minmax(120px,1fr))] justify-center items-center gap-2.5"
+    >
+      @for (time of availableTimes; track time) {
+        <button
+          class="border border-gold-400 rounded-md cursor-pointer text-lg font-bold text-zinc-100 py-2 px-4"
+        >
+          {{ time }}
+        </button>
+      }
+    </div>
+  </section>
+</div>

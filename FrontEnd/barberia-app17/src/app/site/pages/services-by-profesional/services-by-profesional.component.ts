@@ -10,11 +10,12 @@ import { ProfesionalsService } from '../../../features/profesionals/services/pro
 import { Observable } from 'rxjs';
 import { patchState, signalState } from '@ngrx/signals';
 import { Service } from '../../../features/barber-services/models/service.interface';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-services-by-profesional',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './services-by-profesional.component.html',
   styles: ``,
 })
