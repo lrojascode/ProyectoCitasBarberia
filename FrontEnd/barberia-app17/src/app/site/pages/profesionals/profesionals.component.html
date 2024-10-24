@@ -5,106 +5,30 @@
     Profesionales
   </h2>
   <div class="w-full grid gap-4">
-    <div class="flex justify-between items-center py-4 px-8 bg-zinc-900 rounded">
-      <figure class="flex items-center gap-4">
-        <div class="size-24 rounded-full overflow-hidden relative">
-          <img class="object-cover"
-               ngSrc="/assets/barber-1.jpg"
-               alt=""
-               fill
-          >
-        </div>
-        <figcaption class="font-serif text-zinc-100 text-lg">Franco Bossi</figcaption>
-      </figure>
-      <a
-        class="inline-block w-fit py-1.5 px-2.5 rounded bg-gold-400 hover:bg-gold-400/90 transition-colors text-gray-200"
-        [routerLink]="[1, 'services']"
+    @for (profesional of profesionals(); track profesional.id) {
+      <div
+        class="flex justify-between items-center py-4 px-8 bg-zinc-900 rounded"
       >
-        Ver servicios
-      </a>
-    </div>
-    <div class="flex justify-between items-center py-4 px-8 bg-zinc-900 rounded">
-      <figure class="flex items-center gap-4">
-        <div class="size-24 rounded-full overflow-hidden relative">
-          <img ngSrc="/assets/barber-2.jpg" alt=""
-               class="object-cover" fill>
-        </div>
-        <figcaption class="font-serif text-zinc-100 text-lg">Sebastian Rubio</figcaption>
-      </figure>
-      <button
-        type="button"
-        class="inline-block w-fit py-1.5 px-2.5 rounded bg-gold-400 hover:bg-gold-400/90 transition-colors text-gray-200"
-      >
-        Elegir
-      </button>
-    </div>
-    <div class="flex justify-between items-center py-4 px-8 bg-zinc-900 rounded">
-      <figure class="flex items-center gap-4">
-        <div class="size-24 rounded-full overflow-hidden relative">
-          <img ngSrc="/assets/barber-3.jpg" alt=""
-               class="object-cover" fill>
-        </div>
-        <figcaption class="font-serif text-zinc-100 text-lg">Santiago Peloche</figcaption>
-      </figure>
-      <button
-        type="button"
-        class="inline-block w-fit py-1.5 px-2.5 rounded bg-gold-400 hover:bg-gold-400/90 transition-colors text-gray-200"
-      >
-        Elegir
-      </button>
-    </div>
-    <div class="flex justify-between items-center py-4 px-8 bg-zinc-900 rounded">
-      <figure class="flex items-center gap-4">
-        <div class="size-24 rounded-full overflow-hidden relative">
-          <img ngSrc="/assets/barber-4.jpg" alt=""
-               class="object-cover" fill>
-        </div>
-        <figcaption class="font-serif text-zinc-100 text-lg">Franco Medrano</figcaption>
-      </figure>
-      <button
-        type="button"
-        class="inline-block w-fit py-1.5 px-2.5 rounded bg-gold-400 hover:bg-gold-400/90 transition-colors text-gray-200"
-      >
-        Elegir
-      </button>
-    </div>
-    <div class="flex justify-between items-center py-4 px-8 bg-zinc-900 rounded">
-      <figure class="flex items-center gap-4">
-        <div class="size-24 rounded-full overflow-hidden relative">
-          <img ngSrc="/assets/barber-5.jpg" alt=""
-               class="object-cover" fill>
-        </div>
-        <figcaption class="font-serif text-zinc-100 text-lg">Martin García</figcaption>
-      </figure>
-      <button
-        type="button"
-        class="inline-block w-fit py-1.5 px-2.5 rounded bg-gold-400 hover:bg-gold-400/90 transition-colors text-gray-200"
-      >
-        Elegir
-      </button>
-    </div>
-    <div class="flex justify-between items-center py-4 px-8 bg-zinc-900 rounded">
-      <figure class="flex items-center gap-4">
-        <div class="size-24 rounded-full overflow-hidden relative">
-          <img
-            ngSrc="/assets/barber-6.jpg"
-            alt=""
-            class="object-cover" fill
-          >
-        </div>
-        <figcaption class="font-serif text-zinc-100 text-lg">Laureano Torrá</figcaption>
-      </figure>
-      <button
-        type="button"
-        class="inline-block w-fit py-1.5 px-2.5 rounded bg-gold-400 hover:bg-gold-400/90 transition-colors text-gray-200"
-      >
-        Elegir
-      </button>
-    </div>
+        <figure class="flex items-center gap-4">
+          <div class="size-24 rounded-full overflow-hidden relative">
+            <img
+              class="object-cover"
+              ngSrc="/assets/barber-1.jpg"
+              alt=""
+              fill
+            />
+          </div>
+          <figcaption class="font-serif text-zinc-100 text-lg">
+            {{ profesional.firstName }} {{ " " }} {{ profesional.lastName }}
+          </figcaption>
+        </figure>
+        <a
+          class="inline-block w-fit py-1.5 px-2.5 rounded bg-gold-400 hover:bg-gold-400/90 transition-colors text-gray-200"
+          [routerLink]="[profesional.id, 'services']"
+        >
+          Ver servicios
+        </a>
+      </div>
+    }
   </div>
 </section>
-
-
-
-
-
