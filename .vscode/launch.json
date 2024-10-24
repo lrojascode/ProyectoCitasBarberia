@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "BarberShopApplication",
+            "request": "launch",
+            "mainClass": "com.barbershop.BarberShopApplication",
+            "projectName": "barber-shop"
+        },
+        {
+            "type": "java",
             "name": "SecurityConfig",
             "request": "launch",
             "mainClass": "pe.edu.cibertec.security.SecurityConfig",

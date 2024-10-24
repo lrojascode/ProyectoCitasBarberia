@@ -6,7 +6,12 @@
       <div class="perfil-header">
         <span class="text-xl font-semibold">Perfil del Usuario</span>
       </div>
-      <div><button class="editar-btn">Guardar</button></div>
+      <!-- Botón guardar (actualizar el div existente) -->
+      <div>
+        <button (click)="guardarCambios()" class="editar-btn" [disabled]="guardando">
+          {{ guardando ? 'Guardando...' : 'Guardar' }}
+        </button>
+      </div>
 
       <div class="w-full p-8 mx-2 flex justify-center"></div>
     </div>
@@ -14,35 +19,35 @@
     <!-- Sección de detalles del perfil -->
     <div class="w-full md:w-3/5 p-8 text-gray-100 lg:ml-4 shadow-md">
       <div class="rounded shadow p-6">
-        <!-- Nombre -->
-        <div class="pb-6">
-          <label for="firstName" class="font-semibold text-gray-100 block pb-1"
-            >Nombre</label
-          >
-          <div class="flex text-gray-100">
-            <input
-              id="firstName"
-              class="input-editable"
-              type="text"
-              value="{{ perfil.firstName }}"
-            />
-          </div>
+              <!-- Nombre -->
+      <div class="pb-6">
+        <label for="first_name" class="font-semibold text-gray-100 block pb-1">Nombre</label>
+        <div class="flex text-gray-100">
+          <input
+            id="first_name"
+            class="input-editable"
+            type="text"
+            [(ngModel)]="perfil.firstName"
+            name="firstName"
+            #firstName="ngModel"
+          />
         </div>
+      </div>
 
-        <!-- Apellido -->
-        <div class="pb-6">
-          <label for="lastName" class="font-semibold text-gray-100 block pb-1"
-            >Apellido</label
-          >
-          <div class="flex">
-            <input
-              id="lastName"
-              class="input-editable"
-              type="text"
-              value="{{ perfil.lastName }}"
-            />
-          </div>
+              <!-- Apellido -->
+      <div class="pb-6">
+        <label for="last_name" class="font-semibold text-gray-100 block pb-1">Apellido</label>
+        <div class="flex">
+          <input
+            id="last_name"
+            class="input-editable"
+            type="text"
+            [(ngModel)]="perfil.lastName"
+            name="lastName"
+            #lastName="ngModel"
+          />
         </div>
+      </div>
 
         <!-- Email -->
         <div class="pb-6">
@@ -55,39 +60,40 @@
               class="input-editable"
               type="email"
               value="{{ perfil.email }}"
+              readonly
             />
           </div>
         </div>
 
-        <!-- Nombre de usuario -->
-        <div class="pb-6">
-          <label for="username" class="font-semibold text-gray-100 block pb-1"
-            >Nombre de Usuario</label
-          >
-          <div class="flex">
-            <input
-              id="username"
-              class="input-editable"
-              type="text"
-              value="{{ perfil.username }}"
-            />
-          </div>
+              <!-- Username -->
+      <div class="pb-6">
+        <label for="username" class="font-semibold text-gray-100 block pb-1">Nombre de Usuario</label>
+        <div class="flex">
+          <input
+            id="username"
+            class="input-editable"
+            type="text"
+            [(ngModel)]="perfil.username"
+            name="username"
+            #username="ngModel"
+          />
         </div>
+      </div>
 
-        <!-- Teléfono -->
-        <div class="pb-6">
-          <label for="phone" class="font-semibold text-gray-100 block pb-1"
-            >Teléfono</label
-          >
-          <div class="flex">
-            <input
-              id="phone"
-              class="input-editable"
-              type="text"
-              value="{{ perfil.phone }}"
-            />
-          </div>
+              <!-- Teléfono -->
+      <div class="pb-6">
+        <label for="phone" class="font-semibold text-gray-100 block pb-1">Teléfono</label>
+        <div class="flex">
+          <input
+            id="phone"
+            class="input-editable"
+            type="text"
+            [(ngModel)]="perfil.phone"
+            name="phone"
+            #phone="ngModel"
+          />
         </div>
+      </div>
 
         <!-- Contraseña -->
         <div class="pb-6">
@@ -100,6 +106,7 @@
               id="password"
               class="input-editable"
               value="{{ perfil.password }}"
+              readonly
             />
           </div>
         </div>
@@ -108,7 +115,7 @@
   </div>
 
   <!-- Botón de Cerrar Sesión -->
-  <div class="mt-4">
-    <button class="cerrar-sesion-btn">Cerrar Sesión</button>
-  </div>
+<div class="mt-4">
+  <button (click)="cerrarSesion()" class="cerrar-sesion-btn">Cerrar Sesión</button>
+</div>
 </div>

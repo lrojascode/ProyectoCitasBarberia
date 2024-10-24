@@ -16,4 +16,16 @@ export class AuthService {
     const url = `${this._urlBase}/login`;
     return this._http.post<LoginResponse>(url, credentials);
   }
+
+  public forgotPassword(data: { email: string }): Observable<any> {
+    const url = `${this._urlBase}/api/password/forgot-password`;
+    return this._http.post(url, data);
+  }
+
+
+  public resetPassword(data: { token: string; newPassword: string }): Observable<string> {
+    const url = `${this._urlBase}/api/password/reset-password`;
+    return this._http.post(url, data, { responseType: 'text' });
+}
+  
 }
