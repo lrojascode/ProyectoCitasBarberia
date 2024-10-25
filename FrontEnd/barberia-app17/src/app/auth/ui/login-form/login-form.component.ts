@@ -9,7 +9,7 @@ import { NgClass } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormValidatorsService } from '../../../shared/services/form-validator.service';
 import { AuthCredentials } from '../../models/auth-credentials';
-import { Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'login-form',
@@ -23,6 +23,7 @@ import { Router } from '@angular/router';
     InputGroupAddonModule,
     NgClass,
     InputTextModule,
+    RouterLink,
   ],
   templateUrl: './login-form.component.html',
   styles: ``,
@@ -30,7 +31,6 @@ import { Router } from '@angular/router';
 export class LoginFormComponent {
   private readonly formBuilder = inject(FormBuilder);
   private readonly formsValidatorsService = inject(FormValidatorsService);
-  private readonly router = inject(Router); 
 
   public isLoading = input<boolean>(false);
 
@@ -39,7 +39,7 @@ export class LoginFormComponent {
   public seePass = signal<boolean>(false);
 
   // Login Form
-  public readonly loginForm = this.formBuilder.group({
+  public readonly loginForm = this.formBuilder.nonNullable.group({
     username: ['', Validators.required],
     password: ['', Validators.required],
   });
@@ -60,12 +60,8 @@ export class LoginFormComponent {
     }
 
     this.submittedForm.emit({
-      email: this.loginForm.value.username,
-      password: this.loginForm.value.password,
-    } as AuthCredentials);
-  }
-
-  public redirectToRegister(): void {
-    this.router.navigate(['/auth/registro']); // Redirige a la ruta de registro
+      email: this.loginForm.controls.username.value,
+      password: this.loginForm.controls.password.value,
+    });
   }
 }
