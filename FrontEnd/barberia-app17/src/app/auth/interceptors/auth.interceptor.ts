@@ -4,7 +4,7 @@ import { AuthFacade } from '../services/auth-facade.service';
 import { Router } from '@angular/router';
 import { EMPTY } from 'rxjs';
 
-const WHITE_LIST = ['login', 'api/services', 'api/employees/enable'] as const;
+const WHITE_LIST = ['login', 'api/services', 'api/employees/enable', 'api/usuario/register'] as const;
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authFacade = inject(AuthFacade);

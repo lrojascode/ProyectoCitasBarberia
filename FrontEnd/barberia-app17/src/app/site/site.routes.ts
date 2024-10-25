@@ -9,6 +9,7 @@ import { isAuthenticatedGuard } from '../auth/guards/is-authenticated.guard';
 import { ForgotPasswordComponent } from '../auth/ui/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from '../auth/ui/reset-password/reset-password.component';
 import { BookAppointmentComponent } from './pages/book-appointment/book-appointment.component';
+import { RegistrarComponent } from './pages/registro/registro.component';
 
 export const SITE_ROUTES: Routes = [
   {
@@ -45,7 +46,11 @@ export const SITE_ROUTES: Routes = [
       {
         path: 'auth/reset-password',
         component: ResetPasswordComponent
-},
+      },
+      {
+        path: 'auth/registro',
+        component: RegistrarComponent
+      },
         {
         path: 'book-appointment/:serviceId/:profesionalId',
         component: BookAppointmentComponent,
