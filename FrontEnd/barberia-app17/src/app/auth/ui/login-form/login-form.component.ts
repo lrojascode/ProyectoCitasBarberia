@@ -9,6 +9,7 @@ import { NgClass } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormValidatorsService } from '../../../shared/services/form-validator.service';
 import { AuthCredentials } from '../../models/auth-credentials';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'login-form',
@@ -29,6 +30,7 @@ import { AuthCredentials } from '../../models/auth-credentials';
 export class LoginFormComponent {
   private readonly formBuilder = inject(FormBuilder);
   private readonly formsValidatorsService = inject(FormValidatorsService);
+  private readonly router = inject(Router); 
 
   public isLoading = input<boolean>(false);
 
@@ -61,5 +63,9 @@ export class LoginFormComponent {
       email: this.loginForm.value.username,
       password: this.loginForm.value.password,
     } as AuthCredentials);
+  }
+
+  public redirectToRegister(): void {
+    this.router.navigate(['/auth/registro']); // Redirige a la ruta de registro
   }
 }
