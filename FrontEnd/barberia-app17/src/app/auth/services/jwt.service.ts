@@ -13,7 +13,7 @@ export class JwtService {
     }
   }
 
-  private decodeToken(token: string): any {
+  public decodeToken(token: string): any {
     try {
       const payload = token.split('.')[1];
       const decoded = atob(payload);

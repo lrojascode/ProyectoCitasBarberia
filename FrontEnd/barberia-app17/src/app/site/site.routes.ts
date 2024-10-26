@@ -10,6 +10,7 @@ import { ForgotPasswordComponent } from '../auth/ui/forgot-password/forgot-passw
 import { ResetPasswordComponent } from '../auth/ui/reset-password/reset-password.component';
 import { BookAppointmentComponent } from './pages/book-appointment/book-appointment.component';
 import { RegistrarComponent } from './pages/registro/registro.component';
+import { TurnosComponent } from './pages/turnos/turnos.component';
 
 export const SITE_ROUTES: Routes = [
   {
@@ -27,6 +28,11 @@ export const SITE_ROUTES: Routes = [
       {
         path: 'perfil',
         component: PerfilComponent,
+        canActivate: [isAuthenticatedGuard],
+      },
+      {
+        path: 'turnos',
+        component: TurnosComponent,
         canActivate: [isAuthenticatedGuard],
       },
       {
