@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CitasService } from '../../services/citas.service';
 import { forkJoin, Observable } from 'rxjs';
 import { Cita, CitasResponse, ServiceResponse } from '../../interfaces/citas.interfaces';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-citas',
@@ -16,7 +17,7 @@ export class CitasComponent implements OnInit {
   error = false;
   errorMessage = '';
 
-  constructor(private citasService: CitasService) {}
+  constructor(private citasService: CitasService, private router: Router) {}
 
   ngOnInit() {
     this.loadCitas();
@@ -91,5 +92,13 @@ export class CitasComponent implements OnInit {
         }
       });
     }
+  }
+
+  cerrarSesion(): void {
+    // Eliminar el token del localStorage
+    localStorage.removeItem('auth');
+    
+    // Redirigir al usuario a la página de inicio de sesión
+    this.router.navigate(['/auth/login']); // Cambia '/login' por la ruta de tu componente de inicio de sesión
   }
 }
