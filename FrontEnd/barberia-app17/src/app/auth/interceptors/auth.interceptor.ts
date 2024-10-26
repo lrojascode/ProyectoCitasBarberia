@@ -19,10 +19,17 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const token = authFacade.token();
   console.log(token);
 
-  if (!token) {
-    router.navigateByUrl('/auth/login');
+  // Aquí se puede comprobar si el usuario está en una ruta administrativa
+  const isAdminRoute = req.url.includes('/admin/');
 
-    return EMPTY;
+  if (!token) {
+    if (isAdminRoute) {
+      // Permite que el guardia maneje la redirección si está en una ruta admin
+      return next(req);
+    } else {
+      router.navigateByUrl('/auth/login');
+      return EMPTY;
+    }
   }
 
   const authRequest = req.clone({
