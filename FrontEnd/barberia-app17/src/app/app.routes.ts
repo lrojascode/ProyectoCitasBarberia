@@ -11,7 +11,8 @@ export const routes: Routes = [
   {
     path: 'admin',
     component: AdminLayoutComponent,
-    loadChildren: () => import('./admin/admin.module').then((m) => m.AdminModule),
+    loadChildren: () =>
+      import('./admin/admin.module').then((m) => m.AdminModule),
     canActivate: [isAuthenticatedGuard],
   },
   {

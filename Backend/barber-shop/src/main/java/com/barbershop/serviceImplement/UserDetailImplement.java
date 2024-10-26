@@ -68,5 +68,10 @@ public class UserDetailImplement implements UserDetails {
     public String getEmail() {
         return usuario.getEmail();
     }
+
+    // Obtener el id del usuario
+    public Long getId() {
+        return usuario.getId();
+    }
 }
 

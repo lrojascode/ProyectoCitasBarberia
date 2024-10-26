@@ -1,0 +1,30 @@
+<div class="turnos-container">
+    <h2 class="text-2xl font-bold mb-6 text-gray-100">Mis Turnos</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div *ngFor="let cita of citas" class="cita-card">
+        <div class="p-6 rounded-lg shadow-md bg-gray-800 text-gray-100">
+          <div class="mb-4">
+            <h3 class="text-xl font-semibold mb-2">{{cita.service}}</h3>
+            <p class="text-gray-300">{{formatearFecha(cita.datetime)}}</p>
+          </div>
+          
+          <div class="mb-4">
+            <p class="text-gray-300">Profesional: {{cita.employee}}</p>
+            <p class="text-gray-300">Estado: {{cita.cancelled ? 'Cancelada' : 'Activa'}}</p>
+          </div>
+          
+          <button 
+            *ngIf="!cita.cancelled"
+            (click)="cancelarCita(cita.id)" 
+            class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors">
+            Cancelar Turno
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div *ngIf="citas.length === 0" class="text-center text-gray-100 mt-8">
+      No tienes turnos programados
+    </div>
+  </div>

@@ -1,7 +1,10 @@
 import {
   Component,
+  inject,
+  input,
   Input,
   numberAttribute,
+  OnDestroy,
   OnInit,
   signal,
 } from '@angular/core';
@@ -10,6 +13,11 @@ import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { AppointmentService } from '../../../features/appointments/services/appointment.service';
+import { map, Subscription, switchMap, tap } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { AuthFacade } from '../../../auth/services/auth-facade.service';
 
 @Component({
   selector: 'app-book-appointment',
@@ -18,16 +26,29 @@ import { es } from 'date-fns/locale';
   templateUrl: './book-appointment.component.html',
   styles: ``,
 })
-export class BookAppointmentComponent implements OnInit {
+export class BookAppointmentComponent implements OnInit, OnDestroy {
+  private readonly appointmentService = inject(AppointmentService);
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly authFacade = inject(AuthFacade);
+
   @Input({ transform: numberAttribute }) serviceId = 0;
   @Input({ transform: numberAttribute }) profesionalId = 0;
 
+  userId = this.authFacade.userId;
   date: Date | undefined;
   selectedDate = signal<Date>(new Date());
-  minDate: Date | undefined;
-  maxDate: Date | undefined;
+  selectedTime = signal<string | null>(null);
+  selectedDate$ = toObservable(this.selectedDate);
+  public subscription!: Subscription;
 
-  availableTimes: string[] = [
+  public service = toSignal(
+    this.activatedRoute.data.pipe(map(({ service }) => service)),
+    { initialValue: '' },
+  );
+
+  minDate: Date | undefined;
+
+  times: string[] = [
     '09:00',
     '10:00',
     '11:00',
@@ -42,22 +63,48 @@ export class BookAppointmentComponent implements OnInit {
     '20:00',
   ];
 
+  availableTimes = signal<string[]>([]);
+
   ngOnInit() {
-    const today = new Date();
-    const month = today.getMonth();
-    const year = today.getFullYear();
-    const prevMonth = month === 0 ? 11 : month - 1;
-    const prevYear = prevMonth === 11 ? year - 1 : year;
-    const nextMonth = month === 11 ? 0 : month + 1;
-    const nextYear = nextMonth === 0 ? year + 1 : year;
     this.minDate = new Date();
-    // this.minDate.setMonth(prevMonth);
-    // this.minDate.setFullYear(prevYear);
-    this.maxDate = new Date();
-    this.maxDate.setMonth(nextMonth);
-    this.maxDate.setFullYear(nextYear);
+
+    this.subscription = this.selectedDate$
+      .pipe(
+        tap((date) => console.log('selectedDate pipe', date)),
+        switchMap((date) =>
+          this.appointmentService.getAvailableTimes(
+            this.profesionalId,
+            date.toISOString().split('T')[0],
+          ),
+        ),
+        tap((data) => {
+          console.log('after switch map', data);
+          this.availableTimes.set(data.horariosDisponibles);
+        }),
+      )
+      .subscribe();
+
+    console.log(this.serviceId, this.profesionalId);
   }
 
   protected readonly format = format;
   protected readonly es = es;
+
+  selectTime(time: string) {
+    this.selectedTime.set(time); // Establece el horario seleccionado
+  }
+
+  async reservar() {
+    await this.appointmentService.reservar(
+      this.profesionalId,
+      this.serviceId,
+      this.selectedDate(),
+      this.selectedTime() ?? '11:00',
+      this.userId(),
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 }
