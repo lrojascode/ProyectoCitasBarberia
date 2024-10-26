@@ -64,13 +64,7 @@ export const SITE_ROUTES: Routes = [
       },
       {
         path: 'auth/registro',
-        component: RegistrarComponent
-      },
-        {
-        path: 'book-appointment/:serviceId/:profesionalId',
-        component: BookAppointmentComponent,
-        canActivate: [isAuthenticatedGuard],
-
+        component: RegistrarComponent,
       },
       {
         path: '**',
