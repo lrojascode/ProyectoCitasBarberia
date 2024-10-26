@@ -31,6 +31,7 @@ public class EmployeeSchedule {
     @Column(name = "to_hour")
     private LocalTime toHour;
     
+    @Column(name = "available")
     private boolean available = true;
     
 }
