@@ -8,6 +8,7 @@ export interface Cita {
     end_time: string;
     cancelled: boolean;
     serviceName?: string;
+    employeeName?: string;
   }
   
   export interface CitasResponse {
@@ -27,16 +28,4 @@ export interface Cita {
     services: Service;
     mensaje: string;
     status: string;
-  }
-
-  export interface Cita {
-    id: number;
-    customers_id: number;
-    employees_id: number;
-    services_id: number;
-    datetime: string;
-    end_time: string;
-    cancelled: boolean;
-    serviceName?: string;
-    employeeName?: string;  // Nuevo campo
   }
