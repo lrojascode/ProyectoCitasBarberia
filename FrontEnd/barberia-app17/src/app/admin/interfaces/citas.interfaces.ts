@@ -8,6 +8,7 @@ export interface Cita {
     end_time: string;
     cancelled: boolean;
     serviceName?: string;
+    employeeName?: string;
   }
   
   export interface CitasResponse {
