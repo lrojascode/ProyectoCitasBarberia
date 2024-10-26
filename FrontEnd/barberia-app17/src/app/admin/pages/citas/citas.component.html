@@ -42,6 +42,9 @@
                         Cliente ID
                       </th>
                       <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-zinc-400">
+                        Empleado
+                      </th>
+                      <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-zinc-400">
                         Servicio
                       </th>
                       <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-zinc-400">
@@ -54,7 +57,7 @@
                   </thead>
                   <tbody class="divide-y divide-zinc-800 bg-zinc-900">
                     <tr *ngIf="citas.length === 0">
-                      <td colspan="5" class="text-center py-4 text-zinc-400">
+                      <td colspan="6" class="text-center py-4 text-zinc-400">
                         No hay citas disponibles
                       </td>
                     </tr>
@@ -67,7 +70,10 @@
                         Cliente #{{cita.customers_id}}
                       </td>
                       <td class="whitespace-nowrap px-3 py-4 text-sm text-white">
-                        {{cita.serviceName}} <!-- Aquí se muestra el nombre del servicio -->
+                        {{cita.employeeName}}
+                      </td>
+                      <td class="whitespace-nowrap px-3 py-4 text-sm text-white">
+                        {{cita.serviceName}}
                       </td>
                       <td class="whitespace-nowrap px-3 py-4 text-sm">
                         <span [ngClass]="cita.cancelled ? 

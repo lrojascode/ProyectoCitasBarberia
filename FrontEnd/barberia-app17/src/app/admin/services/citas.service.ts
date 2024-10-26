@@ -18,6 +18,10 @@ import { CitasResponse, ServiceResponse } from '../interfaces/citas.interfaces';
     getServicio(id: number): Observable<ServiceResponse> {
       return this.http.get<ServiceResponse>(`${this.baseUrl}/servicios/${id}`);
     }
+
+    getEmpleado(id: number): Observable<ServiceResponse> {
+      return this.http.get<ServiceResponse>(`${this.baseUrl}/employees/${id}`);
+    }
   
     deleteCita(id: number): Observable<any> {
       return this.http.delete(`${this.baseUrl}/citas/${id}`);

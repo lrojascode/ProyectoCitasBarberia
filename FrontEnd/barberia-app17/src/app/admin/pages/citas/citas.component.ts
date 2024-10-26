@@ -5,6 +5,7 @@ import { forkJoin, Observable } from 'rxjs';
 import { Cita, CitasResponse, ServiceResponse } from '../../interfaces/citas.interfaces';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-citas',
   standalone: true,
@@ -32,28 +33,36 @@ export class CitasComponent implements OnInit {
         console.log('Respuesta del servidor:', response);
         const citasArray = response.citas || [];
 
-        // Crear un array de observables para obtener los detalles de cada servicio
+        // Crear arrays de observables para servicios y empleados
         const serviceRequests: Observable<ServiceResponse>[] = citasArray.map(cita => 
           this.citasService.getServicio(cita.services_id)
         );
+        
+        const employeeRequests: Observable<any>[] = citasArray.map(cita =>
+          this.citasService.getEmpleado(cita.employees_id)
+        );
 
-        // Si hay citas, obtener los detalles de los servicios
-        if (serviceRequests.length > 0) {
-          forkJoin(serviceRequests).subscribe({
-            next: (serviceResponses: ServiceResponse[]) => {
-              console.log('Respuestas de servicios:', serviceResponses);
-              // Combinar la información de las citas con los nombres de los servicios
+        // Combinar todas las peticiones
+        if (citasArray.length > 0) {
+          forkJoin({
+            services: forkJoin(serviceRequests),
+            employees: forkJoin(employeeRequests)
+          }).subscribe({
+            next: (responses) => {
+              console.log('Respuestas combinadas:', responses);
+              // Combinar la información de citas con servicios y empleados
               this.citas = citasArray.map((cita, index) => ({
                 ...cita,
-                serviceName: serviceResponses[index].services.name
+                serviceName: responses.services[index].services.name,
+                employeeName: `${responses.employees[index].productos.firstName} ${responses.employees[index].productos.lastName}`
               }));
-              console.log('Citas con nombres de servicios:', this.citas);
+              console.log('Citas con detalles completos:', this.citas);
               this.loading = false;
             },
             error: (error: Error) => {
-              console.error('Error al cargar los servicios:', error);
+              console.error('Error al cargar los detalles:', error);
               this.error = true;
-              this.errorMessage = 'Error al cargar los detalles de los servicios';
+              this.errorMessage = 'Error al cargar los detalles de las citas';
               this.loading = false;
             }
           });
