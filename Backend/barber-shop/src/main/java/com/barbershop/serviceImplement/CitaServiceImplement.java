@@ -298,6 +298,7 @@ public class CitaServiceImplement implements CitaService {
 			citaDetails.put("horario", horarioFormateado);
 			citaDetails.put("fecha", fechaFormateada);
 			citaDetails.put("empleado", empleado.getFirstName() + " " + empleado.getLastName());
+			citaDetails.put("id", cita.getId());
 
 			Servicio servicio = cita.getService();
 			citaDetails.put("servicio", servicio != null ? servicio.getName() : "Servicio no disponible");

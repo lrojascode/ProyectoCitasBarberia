@@ -12,6 +12,8 @@ import { CommonModule } from '@angular/common';
 import { JwtService } from '../../../auth/services/jwt.service';
 import { AuthFacade } from '../../../auth/services/auth-facade.service';
 import { TagModule } from 'primeng/tag';
+import { ToastService } from '../../../shared/services/toast.service';
+import { patchState, signalState } from '@ngrx/signals';
 
 interface DecodedToken {
   sub: string;
@@ -29,8 +31,12 @@ interface DecodedToken {
 })
 export class TurnosComponent implements OnInit {
   private readonly authFacade = inject(AuthFacade);
+  private readonly toastService = inject(ToastService);
 
-  citas: WritableSignal<CitaData[]> = signal<CitaData[]>([]);
+  citasState = signalState<{ citas: CitaData[] }>({
+    citas: [],
+  });
+
   userEmail = '';
   citaId: number | null = null;
   userId = this.authFacade.userId;
@@ -62,7 +68,8 @@ export class TurnosComponent implements OnInit {
   }
 
   async cargarCitasPorCustomer() {
-    this.citas.set(await this.turnosService.getCitaByCustomer());
+    const citasBd = await this.turnosService.getCitaByCustomer();
+    patchState(this.citasState, { citas: citasBd });
   }
 
   /*cargarCitas(): void {
@@ -107,25 +114,26 @@ export class TurnosComponent implements OnInit {
     }
   }*/
 
-  cancelarCita(citaId: number): void {
-    const storedToken = localStorage.getItem('auth');
+  async cancelarCita(citaId: number) {
+    patchState(this.citasState, (state) => ({
+      citas: state.citas.map((cita) =>
+        cita.id === citaId ? { ...cita, estado: 'CANCELADA' } : cita,
+      ),
+    }));
 
-    if (storedToken) {
-      const parsedToken = JSON.parse(storedToken);
-      const token = parsedToken.token;
-      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
-      this.turnosService.cancelarCita(citaId, headers).subscribe({
-        next: () => {
-          alert('Cita cancelada exitosamente');
-          // this.cargarCitas();
-        },
-        error: (error) => {
-          console.error('Error en la cancelación:', error);
-          alert('Error al cancelar la cita');
-        },
-      });
-    }
+    this.turnosService.cancelarCita(citaId).subscribe({
+      next: () => {
+        this.toastService.showToast({
+          severity: 'success',
+          detail: 'Reserva cancelada con éxito',
+          summary: 'Éxito',
+        });
+      },
+      error: (error) => {
+        console.error('Error en la cancelación:', error);
+        alert('Error al cancelar la cita');
+      },
+    });
   }
 
   formatearFecha(fecha: string): string {

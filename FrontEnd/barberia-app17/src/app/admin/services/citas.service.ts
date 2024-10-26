@@ -65,7 +65,7 @@ export class CitasService {
     return response.citas;
   }
 
-  cancelarCita(id: number, headers: HttpHeaders): Observable<any> {
-    return this.http.put(`${this.baseUrl}/cancelar/${id}`, {}, { headers });
+  cancelarCita(id: number): Observable<any> {
+    return this.http.put(`${this.baseUrl}/citas/cancelar/${id}`, {});
   }
 }

@@ -25,7 +25,7 @@ public interface CitaRepository extends JpaRepository<Cita, Long> {
 			@Param("startDatetime") LocalTime startDatetime, @Param("endDatetime") LocalTime endDatetime);
 
 	// Obtener citas por cliente (Customer)
-	@Query("SELECT c FROM Cita c WHERE c.customer.id = :customerId AND c.cancelled = false")
+	@Query("SELECT c FROM Cita c WHERE c.customer.id = :customerId")
 	List<Cita> findByCustomerId(@Param("customerId") Long customerId);
 
 	// Cancelar cita específica por empleado y fecha/hora
