@@ -83,7 +83,7 @@ public class ServiciosServiceImplement implements ServiciosService{
 			servicio.setName(service.getName());
 			servicio.setDescription(service.getDescription());
 			servicio.setPrice(service.getPrice());
-			servicio.setDuration_minutes(service.getDuration_minutes());
+			servicio.setDurationMinutes(service.getDurationMinutes());
 			serviceDao.save(servicio);
 			
 			response.put("servicios", servicio);			

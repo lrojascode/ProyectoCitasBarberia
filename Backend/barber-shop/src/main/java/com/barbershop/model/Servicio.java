@@ -1,5 +1,6 @@
 package com.barbershop.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
@@ -23,5 +24,7 @@ public class Servicio {
 	private String name;
 	private String description;
 	private Double price;
-	private int duration_minutes;
+	@Column(name = "duration_minutes")
+	private Integer durationMinutes;
+
 }

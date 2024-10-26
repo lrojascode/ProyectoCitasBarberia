@@ -49,13 +49,4 @@ public class CustomerController {
 		return Customerservice.eliminarCliente(id);
 	}
 	
-	@GetMapping("/enable")
-	public ResponseEntity<Map<String, Object>> listarPorEnable(){
-		return Customerservice.listarClientesEnable();
-	}
-	
-	@PutMapping("/eliminar/{id}")
-	public ResponseEntity<Map<String, Object>> eliminarPorEnable(@PathVariable Long id){
-		return Customerservice.eliminarClientesEnable(id);
-	}
 }

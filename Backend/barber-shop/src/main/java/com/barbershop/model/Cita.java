@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Data
 @Entity
@@ -19,17 +18,17 @@ public class Cita {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonProperty("customers_id") 
-    @Column(name = "customers_id", nullable = false)
-    private Long customerId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "customers_id", nullable = false)
+    private Customer customer;
 
-    @JsonProperty("employees_id") 
-    @Column(name = "employees_id", nullable = false)
-    private Long employeeId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "employees_id", nullable = false)
+    private Empleado employee;
 
-    @JsonProperty("services_id") 
-    @Column(name = "services_id", nullable = false)
-    private Long serviceId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "services_id", nullable = false)
+    private Servicio service;
 
     @JsonProperty("datetime")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
@@ -39,10 +38,10 @@ public class Cita {
     @JsonProperty("end_time")
     @JsonFormat(pattern = "HH:mm")
     @Column(name = "end_time", nullable = false)
-    private LocalTime endTime;
+    private LocalDateTime endTime;
 
     @JsonProperty("cancelled")
     @Column(nullable = false)
     private Boolean cancelled = false;
-    
+
 }

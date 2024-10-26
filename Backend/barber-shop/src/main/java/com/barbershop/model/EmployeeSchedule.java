@@ -1,16 +1,8 @@
 package com.barbershop.model;
 
 import java.time.LocalTime;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -26,17 +18,19 @@ public class EmployeeSchedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "El empleado no puede ser nulo")
     @ManyToOne
     @JoinColumn(name = "employees_id")
     private Empleado empleado;
 
+    @NotNull(message = "La hora de inicio es obligatoria")
     @Column(name = "from_hour")
     private LocalTime fromHour;
 
+    @NotNull(message = "La hora de fin es obligatoria")
     @Column(name = "to_hour")
     private LocalTime toHour;
     
-    @Column(name = "available")
-    private boolean available;
+    private boolean available = true;
     
 }

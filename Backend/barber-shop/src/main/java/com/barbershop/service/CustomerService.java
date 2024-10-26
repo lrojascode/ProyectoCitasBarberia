@@ -18,8 +18,4 @@ public interface CustomerService {
 
 	ResponseEntity<Map<String, Object>> eliminarCliente(Long id);
 
-	ResponseEntity<Map<String, Object>> listarClientesEnable();
-
-	ResponseEntity<Map<String, Object>> eliminarClientesEnable(Long id);
-
 }
