@@ -2,7 +2,9 @@
   class="h-[calc(100svh-132px)] grid grid-rows-[auto_1fr_auto] gap-4 justify-center"
 >
   <section>
-    <h2 class="text-xl font-semibold">Servicio seleccionado</h2>
+    <h2 class="text-xl font-semibold">
+      Servicio seleccionado: {{ service().name }}
+    </h2>
   </section>
   <div class="w-[32rem]">
     <p-calendar
@@ -20,9 +22,12 @@
     <div
       class="grid grid-cols-[repeat(auto-fill,minmax(120px,1fr))] justify-center items-center gap-2.5"
     >
-      @for (time of availableTimes; track time) {
+      @for (time of times; track time) {
         <button
+          pButton
+          [outlined]="true"
           class="border border-gold-400 rounded-md cursor-pointer text-lg font-bold text-zinc-100 py-2 px-4"
+          [disabled]="!availableTimes().includes(time)"
         >
           {{ time }}
         </button>

@@ -30,7 +30,7 @@ public class EmployeeSchedule {
     @NotNull(message = "La hora de fin es obligatoria")
     @Column(name = "to_hour")
     private LocalTime toHour;
-    
+
+    @Column(name = "available")
     private boolean available = true;
-    
 }
