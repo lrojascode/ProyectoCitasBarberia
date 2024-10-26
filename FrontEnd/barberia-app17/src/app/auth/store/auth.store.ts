@@ -38,7 +38,10 @@ export const AuthStore = signalStore(
   withCallState(),
   withStorageSync({
     key: 'auth',
-    select: (state) => ({ token: state.token }),
+    select: (state) => ({ 
+      token: state.token,
+      authorities: state.authorities // Agregar authorities a la persistencia
+    }),
   }),
   withMethods(
     (
@@ -56,9 +59,21 @@ export const AuthStore = signalStore(
               tapResponse({
                 next: async (userSession) => {
                   patchState(state, { ...userSession });
-                  const returnUrl =
-                    activatedRoute.snapshot.queryParams['returnUrl'] || '/';
-                  await router.navigateByUrl(returnUrl);
+                   // Verificar si el usuario es admin
+                   const isAdmin = userSession.authorities?.some(
+                    (auth) => auth.authority === 'Admin'
+                  );
+
+                  // Determinar la URL de redirección
+                  let redirectUrl = '/';
+                  if (isAdmin) {
+                    redirectUrl = '/admin/citas'; // O la ruta administrativa que prefieras
+                  } else {
+                    // Usar returnUrl solo si no es admin
+                    redirectUrl = activatedRoute.snapshot.queryParams['returnUrl'] || '/';
+                  }
+
+                  await router.navigateByUrl(redirectUrl);
                 },
                 error: (err) => {
                   if (err instanceof HttpErrorResponse && err.status === 401) {

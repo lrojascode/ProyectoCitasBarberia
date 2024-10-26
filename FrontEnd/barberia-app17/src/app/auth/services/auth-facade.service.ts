@@ -1,6 +1,8 @@
 import { computed, inject, Injectable, Signal } from '@angular/core';
 import { AuthStore } from '../store/auth.store';
 import { AuthCredentials } from '../models/auth-credentials';
+import { Authority } from '../models/authority.interface';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -34,5 +36,19 @@ export class AuthFacade {
 
   public async logout() {
     await this.authStore.logout();
+  }
+
+  get authorities(): Signal<Authority[] | undefined> {
+    return this.authStore.authorities;
+  }
+
+  public async checkInitialRedirect() {
+    const token = this.token();
+    const authorities = this.authorities();
+    const isAdmin = authorities?.some((auth) => auth.authority === 'Admin');
+
+    if (token && isAdmin) {
+      await inject(Router).navigate(['/admin/citas']);
+    }
   }
 }
