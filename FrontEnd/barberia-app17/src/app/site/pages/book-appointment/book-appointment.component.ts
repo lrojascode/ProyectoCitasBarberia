@@ -16,8 +16,9 @@ import { es } from 'date-fns/locale';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { AppointmentService } from '../../../features/appointments/services/appointment.service';
 import { map, Subscription, switchMap, tap } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthFacade } from '../../../auth/services/auth-facade.service';
+import { ToastService } from '../../../shared/services/toast.service';
 
 @Component({
   selector: 'app-book-appointment',
@@ -30,6 +31,8 @@ export class BookAppointmentComponent implements OnInit, OnDestroy {
   private readonly appointmentService = inject(AppointmentService);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly authFacade = inject(AuthFacade);
+  private readonly toastService = inject(ToastService);
+  private readonly router = inject(Router);
 
   @Input({ transform: numberAttribute }) serviceId = 0;
   @Input({ transform: numberAttribute }) profesionalId = 0;
@@ -102,6 +105,14 @@ export class BookAppointmentComponent implements OnInit, OnDestroy {
       this.selectedTime() ?? '11:00',
       this.userId(),
     );
+
+    this.toastService.showToast({
+      severity: 'success',
+      detail: 'Cita reservada con éxito',
+      summary: 'Éxito',
+    });
+
+    await this.router.navigateByUrl('/turnos');
   }
 
   ngOnDestroy() {

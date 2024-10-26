@@ -1,20 +1,17 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
-import { CitasService } from '../../../admin/services/citas.service';
+import { CitaData, CitasService } from '../../../admin/services/citas.service';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { JwtService } from '../../../auth/services/jwt.service';
 import { AuthFacade } from '../../../auth/services/auth-facade.service';
-
-interface CitaData {
-  id: number;
-  datetime: string;
-  service: string;
-  end_time: string;
-  cancelled: boolean;
-  employee: string;
-  customer: string;
-}
+import { TagModule } from 'primeng/tag';
 
 interface DecodedToken {
   sub: string;
@@ -28,12 +25,12 @@ interface DecodedToken {
   templateUrl: './turnos.component.html',
   styleUrls: ['./turnos.component.css'],
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, TagModule],
 })
 export class TurnosComponent implements OnInit {
   private readonly authFacade = inject(AuthFacade);
 
-  citas: CitaData[] = [];
+  citas: WritableSignal<CitaData[]> = signal<CitaData[]>([]);
   userEmail = '';
   citaId: number | null = null;
   userId = this.authFacade.userId;
@@ -43,11 +40,11 @@ export class TurnosComponent implements OnInit {
     private jwtService: JwtService,
   ) {}
 
-  ngOnInit(): void {
-    this.obtenerInfoUsuario();
+  async ngOnInit() {
+    await this.obtenerInfoUsuario();
   }
 
-  obtenerInfoUsuario(): void {
+  async obtenerInfoUsuario() {
     const storedToken = localStorage.getItem('auth');
 
     if (storedToken) {
@@ -57,7 +54,7 @@ export class TurnosComponent implements OnInit {
       try {
         const decodedToken = this.jwtService.decodeToken(token) as DecodedToken;
         this.userEmail = decodedToken.sub;
-        this.cargarCitas();
+        await this.cargarCitasPorCustomer();
       } catch (error) {
         console.error('Error al decodificar el token:', error);
       }
@@ -65,7 +62,7 @@ export class TurnosComponent implements OnInit {
   }
 
   async cargarCitasPorCustomer() {
-    const citas = await this.turnosService.getCitaByCustomer();
+    this.citas.set(await this.turnosService.getCitaByCustomer());
   }
 
   /*cargarCitas(): void {

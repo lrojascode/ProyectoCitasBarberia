@@ -283,6 +283,9 @@ public class CitaServiceImplement implements CitaService {
 		List<Map<String, Object>> citasResponse = new ArrayList<>();
 
 		for (Cita cita : citas) {
+			Empleado empleado = empleadoDao.findById(cita.getEmployee().getId())
+					.orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
+
 			Map<String, Object> citaDetails = new HashMap<>();
 
 			// Formatear la hora y fecha para la respuesta
@@ -292,16 +295,17 @@ public class CitaServiceImplement implements CitaService {
 			String horarioFormateado = cita.getDatetime().format(horaFormatter).toUpperCase();
 			String fechaFormateada = cita.getDatetime().format(fechaFormatter);
 
-			citaDetails.put("Horario", horarioFormateado);
-			citaDetails.put("Fecha", fechaFormateada);
+			citaDetails.put("horario", horarioFormateado);
+			citaDetails.put("fecha", fechaFormateada);
+			citaDetails.put("empleado", empleado.getFirstName() + " " + empleado.getLastName());
 
 			Servicio servicio = cita.getService();
-			citaDetails.put("Servicio", servicio != null ? servicio.getName() : "Servicio no disponible");
-			citaDetails.put("Duración",
+			citaDetails.put("servicio", servicio != null ? servicio.getName() : "Servicio no disponible");
+			citaDetails.put("duracion",
 					servicio != null ? servicio.getDurationMinutes() + " minutos" : "Duración no disponible");
 
 			// Estado de la cita
-			citaDetails.put("Estado", cita.getCancelled() ? "CANCELADA" : "ACTIVA");
+			citaDetails.put("estado", cita.getCancelled() ? "CANCELADA" : "ACTIVA");
 
 			citasResponse.add(citaDetails);
 		}

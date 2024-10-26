@@ -3,6 +3,18 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { firstValueFrom, Observable } from 'rxjs';
 import { CitasResponse } from '../interfaces/citas.interfaces';
 
+export interface CitaData {
+  id: number;
+  fecha: string;
+  servicio: string;
+  duracion: string;
+  cancelled: boolean;
+  empleado: string;
+  customer: string;
+  horario: string;
+  estado: string;
+}
+
 interface CitaResponse {
   citas: CitaData[];
   mensaje: string;
@@ -13,16 +25,6 @@ interface CitaDetailResponse {
   mensaje: string;
   cita: CitaData;
   status: string;
-}
-
-interface CitaData {
-  id: number;
-  datetime: string;
-  service: string;
-  end_time: string;
-  cancelled: boolean;
-  employee: string;
-  customer: string;
 }
 
 @Injectable({
@@ -56,9 +58,10 @@ export class CitasService {
 
   async getCitaByCustomer() {
     const response = await firstValueFrom(
-      this.http.get<CitaResponse>(`${this.baseUrl}/listarPorCustomer`),
+      this.http.get<CitaResponse>(`${this.baseUrl}/citas/listarPorCustomer`),
     );
 
+    console.log(response.citas);
     return response.citas;
   }
 
