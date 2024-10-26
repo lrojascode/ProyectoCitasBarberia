@@ -30,6 +30,10 @@ export class AuthFacade {
     return this.authStore.username;
   }
 
+  get userId() {
+    return this.authStore.userId;
+  }
+
   public login(credentials: AuthCredentials) {
     this.authStore.login(credentials);
   }

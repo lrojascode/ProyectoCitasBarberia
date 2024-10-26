@@ -14,7 +14,7 @@
       [(ngModel)]="selectedDate"
     />
   </div>
-  <section>
+  <section class="">
     <h2 class="text-xl font-semibold">
       Horarios disponibles para el
       {{ format(selectedDate(), "d 'de' MMMM", { locale: es }) }}
@@ -26,12 +26,22 @@
         <button
           pButton
           [outlined]="true"
-          class="border border-gold-400 rounded-md cursor-pointer text-lg font-bold text-zinc-100 py-2 px-4"
+          [class.bg-gold-800]="time === selectedTime()"
+          class="text-lg font-bold text-zinc-100 py-2 px-4"
           [disabled]="!availableTimes().includes(time)"
+          (click)="selectTime(time)"
         >
           {{ time }}
         </button>
       }
     </div>
+    <button
+      class="mt-4 w-full"
+      pButton
+      [disabled]="!selectedTime()"
+      (click)="reservar()"
+    >
+      Reservar
+    </button>
   </section>
 </div>

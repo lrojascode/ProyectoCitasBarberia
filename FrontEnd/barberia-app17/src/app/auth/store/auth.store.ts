@@ -23,10 +23,12 @@ interface AuthState {
   email: string | undefined;
   token: string | undefined;
   authorities: Authority[];
+  userId: number;
 }
 
 const initialAuthState: AuthState = {
   username: undefined,
+  userId: 0,
   email: undefined,
   authorities: [],
   token: undefined,
@@ -38,9 +40,10 @@ export const AuthStore = signalStore(
   withCallState(),
   withStorageSync({
     key: 'auth',
-    select: (state) => ({ 
+    select: (state) => ({
       token: state.token,
-      authorities: state.authorities // Agregar authorities a la persistencia
+      userId: state.userId,
+      authorities: state.authorities, // Agregar authorities a la persistencia
     }),
   }),
   withMethods(
@@ -59,9 +62,9 @@ export const AuthStore = signalStore(
               tapResponse({
                 next: async (userSession) => {
                   patchState(state, { ...userSession });
-                   // Verificar si el usuario es admin
-                   const isAdmin = userSession.authorities?.some(
-                    (auth) => auth.authority === 'Admin'
+                  // Verificar si el usuario es admin
+                  const isAdmin = userSession.authorities?.some(
+                    (auth) => auth.authority === 'Admin',
                   );
 
                   // Determinar la URL de redirección
@@ -70,7 +73,8 @@ export const AuthStore = signalStore(
                     redirectUrl = '/admin/citas'; // O la ruta administrativa que prefieras
                   } else {
                     // Usar returnUrl solo si no es admin
-                    redirectUrl = activatedRoute.snapshot.queryParams['returnUrl'] || '/';
+                    redirectUrl =
+                      activatedRoute.snapshot.queryParams['returnUrl'] || '/';
                   }
 
                   await router.navigateByUrl(redirectUrl);
