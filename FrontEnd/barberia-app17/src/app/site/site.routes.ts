@@ -10,6 +10,7 @@ import { ForgotPasswordComponent } from '../auth/ui/forgot-password/forgot-passw
 import { ResetPasswordComponent } from '../auth/ui/reset-password/reset-password.component';
 import { BookAppointmentComponent } from './pages/book-appointment/book-appointment.component';
 import { RegistrarComponent } from './pages/registro/registro.component';
+import { BarberServicesService } from '../features/barber-services/services/barber-services.service';
 import { TurnosComponent } from './pages/turnos/turnos.component';
 
 export const SITE_ROUTES: Routes = [
@@ -41,17 +42,25 @@ export const SITE_ROUTES: Routes = [
         canActivate: [isAuthenticatedGuard],
       },
       {
-        path: 'profesionals/:id/services',
+        path: 'profesionals/:profesionalId/services',
         component: ServicesByProfesionalComponent,
         canActivate: [isAuthenticatedGuard],
       },
       {
+        path: 'profesionals/:profesionalId/services/:serviceId/book-appointment',
+        component: BookAppointmentComponent,
+        canActivate: [isAuthenticatedGuard],
+        resolve: {
+          service: BarberServicesService,
+        },
+      },
+      {
         path: 'auth/forgot-password',
-        component: ForgotPasswordComponent
+        component: ForgotPasswordComponent,
       },
       {
         path: 'auth/reset-password',
-        component: ResetPasswordComponent
+        component: ResetPasswordComponent,
       },
       {
         path: 'auth/registro',

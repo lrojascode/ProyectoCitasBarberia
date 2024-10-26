@@ -7,7 +7,6 @@ import {
   OnInit,
 } from '@angular/core';
 import { ProfesionalsService } from '../../../features/profesionals/services/profesionals.service';
-import { Observable } from 'rxjs';
 import { patchState, signalState } from '@ngrx/signals';
 import { Service } from '../../../features/barber-services/models/service.interface';
 import { RouterLink } from '@angular/router';
@@ -22,7 +21,7 @@ import { RouterLink } from '@angular/router';
 export class ServicesByProfesionalComponent implements OnInit {
   private readonly profesionalsService = inject(ProfesionalsService);
 
-  @Input({ transform: numberAttribute }) id = 0;
+  @Input({ transform: numberAttribute }) profesionalId = 0;
 
   public profesionalServices = signalState<{
     employee: string;
@@ -33,8 +32,10 @@ export class ServicesByProfesionalComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.profesionalsService.getServicesByEmployee(this.id).subscribe((res) => {
-      patchState(this.profesionalServices, res);
-    });
+    this.profesionalsService
+      .getServicesByEmployee(this.profesionalId)
+      .subscribe((res) => {
+        patchState(this.profesionalServices, res);
+      });
   }
 }
