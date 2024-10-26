@@ -1,19 +1,17 @@
 // interfaces/citas.interfaces.ts
 export interface Cita {
-    id: number;
-    customers_id: number;
-    employees_id: number;
-    services_id: number;
-    datetime: string;
-    end_time: string;
-    cancelled: boolean;
-    serviceName?: string;
-    employeeName?: string;
-  }
-  
-  export interface CitasResponse {
-    citas: Cita[];
-  }
+  datetime: string;
+  service: string;
+  end_time: string;
+  cancelled: boolean;
+  id: number;
+  employee: string;
+  customer: string;
+}
+
+export interface CitasResponse {
+  citas: Cita[];
+}
   
   export interface Service {
     id: number;
