@@ -8,29 +8,36 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class CorsConfig {
 
-	@Bean
+    @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/login")
                     .allowedOrigins(
-                        "http://localhost:4200",           // Para desarrollo local
-                        "https://barberia-app17-*.vercel.app", // Tu app en Vercel
-                        "https://*.vercel.app"             // Cualquier subdominio de Vercel
+                        "http://localhost:4200",                    // Desarrollo local
+                        "https://barberia-app17.vercel.app"         // Tu app específica
                     )
-                    .allowedMethods("*")
-                    .allowCredentials(true)               // Importante para autenticación
+                    .allowedOriginPatterns(
+                        "https://barberia-app17-*.vercel.app",      // Preview deployments
+                        "https://*.vercel.app"                      // Otros subdominios
+                    )
+                    .allowedMethods("POST", "OPTIONS")
+                    .allowCredentials(true)
+                    .allowedHeaders("*")
                     .exposedHeaders("*");
                 
                 registry.addMapping("/api/**")
                     .allowedOrigins(
-                        "http://localhost:4200",           // Para desarrollo local
-                        "https://barberia-app17-*.vercel.app", // Tu app en Vercel
-                        "https://*.vercel.app"             // Cualquier subdominio de Vercel
+                        "http://localhost:4200",                    // Desarrollo local
+                        "https://barberia-app17.vercel.app"         // Tu app específica
+                    )
+                    .allowedOriginPatterns(
+                        "https://barberia-app17-*.vercel.app",      // Preview deployments
+                        "https://*.vercel.app"                      // Otros subdominios
                     )
                     .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                    .allowCredentials(true)               // Importante para autenticación
+                    .allowCredentials(true)
                     .allowedHeaders("*");
             }
         };
