@@ -1,0 +1,9 @@
+// filepath: FrontEnd/barberia-app17/vercel.json
+{
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
