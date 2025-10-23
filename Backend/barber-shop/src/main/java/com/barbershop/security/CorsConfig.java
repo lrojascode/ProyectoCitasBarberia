@@ -16,11 +16,13 @@ public class CorsConfig {
                 registry.addMapping("/login")
                     .allowedOrigins(
                         "http://localhost:4200",                    // Desarrollo local
-                        "https://barberia-app17.vercel.app"         // Tu app específica
+                        "https://barberia-app17.vercel.app",
+                        "https://barberia.lrojas.dev/"
                     )
                     .allowedOriginPatterns(
                         "https://barberia-app17-*.vercel.app",      // Preview deployments
-                        "https://*.vercel.app"                      // Otros subdominios
+                        "https://*.vercel.app",  
+                        "https://*.lrojas.dev/"  // Otros subdominios
                     )
                     .allowedMethods("POST", "OPTIONS")
                     .allowCredentials(true)
@@ -30,11 +32,13 @@ public class CorsConfig {
                 registry.addMapping("/api/**")
                     .allowedOrigins(
                         "http://localhost:4200",                    // Desarrollo local
-                        "https://barberia-app17.vercel.app"         // Tu app específica
+                        "https://barberia-app17.vercel.app",
+                        "https://barberia.lrojas.dev/" // Tu app específica
                     )
                     .allowedOriginPatterns(
                         "https://barberia-app17-*.vercel.app",      // Preview deployments
-                        "https://*.vercel.app"                      // Otros subdominios
+                        "https://*.vercel.app",
+                        "https://*.lrojas.dev/" // Otros subdominios
                     )
                     .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                     .allowCredentials(true)
